@@ -1,5 +1,6 @@
 <?php
-require_once "task.php";
+
+require_once "Controller/TaskController.php";
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
 
 
@@ -10,15 +11,28 @@ if (!empty($_GET['action'])) {
     $action = 'home'; // acción por defecto si no envían
 }
 
-
+//51 56
 
 $params = explode('/', $action);
 
+
+$taskController = new TaskController();
 // determina que camino seguir según la acción
 switch ($params[0]) {
     case 'home': 
-        showHome(); 
+        $taskController->showHome(); 
         break;
+    case 'createTask':
+        $taskController->createTask();
+        break;
+    case 'deleteTask':
+        $taskController->deleteTask($params[1]);
+        break;
+    case 'updateTask':
+        $taskController->updateTask($params[1]);
+        break;
+    case 'viewTask':
+        $taskController->viewTask($params[1]);
     default: 
         echo('404 Page not found'); 
         break;
